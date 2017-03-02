@@ -1,62 +1,73 @@
-class Nodo(object):
+class NodoLista(object):
 	def __init__(self,elemento,palabra):
-		self.__elemento=elemento
-		self.__palabra=palabra
-		self.__psig=None
+		self.elemento=elemento
+		self.palabra=palabra
+		self.psig=None
 	def getElemento(self):
-		return self.__elemento
+		return self.elemento
 	def getPalabra(self):
-		return self.__palabra
+		return self.palabra
+
+
+
+
+
+
+
+
 
 class Lista(object):
 	def __init__(self):
-		self.__primero=None
-		self.__ultimo=None
+		self.primero=None
+		self.ultimo=None
+		self.tam=0
 	def getVacio(self):
-		if self.__primero==None:
+		if self.primero==None:
 			return True
 
 	def setInicio(self,elemento,palabra):
-		nuevo = Nodo(elemento,palabra)
+		nuevo = NodoLista(elemento,palabra)
 		if self.getVacio()==True:
-			self.__primero=self.__ultimo=nuevo
+			self.primero=self.ultimo=nuevo
 		else:
-			nuevo.psig=self.__primero
-			self.__primero=nuevo
+			nuevo.psig=self.primero
+			self.primero=nuevo
+			self.tam +=1
 
-	def setFinal(self,elemento):
-		nuevo=Nodo(elemento)
+	def setFinal(self,elemento,palabra):
+		nuevo=NodoLista(elemento,palabra)
 		if self.getVacio()==True:
-			self.__primero=self.__ultimo=nuevo
+			self.primero=self.ultimo=nuevo
 		else:
-			self.__ultimo.psig=nuevo
-			self.__ultimo=nuevo
+			self.ultimo.psig=nuevo
+			self.ultimo=nuevo
+			self.tam +=1
 	def eliminarPrimero(self):
 		if self.getVacio()==True:
 			print ("lista vacia, imposible eliminar")
-		elif self.__primero==self.__ultimo:
-			self.__primero=None
-			self.__ultimom=None
+		elif self.primero==self.ultimo:
+			self.primero=None
+			self.ultimom=None
 			print("elemento eliminado, lista vacia")
 		else: 
-			temp =self.__primero
-			self.__primero=self.__primero.psig
+			temp =self.primero
+			self.primero=self.primero.psig
 			temp=None
 			print("elemento eliminado")
 	def eliminarUltimo(self):
 		if self.getVacio()==True:
 			print("lista vacia")
-		elif self.__primero==self.__ultimo:
-			self.__primero=None
-			self.__ultimo=None
+		elif self.primero==self.ultimo:
+			self.primero=None
+			self.ultimo=None
 			print("elemento eliminado, lista vacia")
 		else:
 			validar=True
-			temp=self.__primero
+			temp=self.primero
 			while(validar):
-				if temp.psig==self.__ultimo:
-					temp2=self.__ultimo
-					self.__ultimo=temp
+				if temp.psig==self.ultimo:
+					temp2=self.ultimo
+					self.ultimo=temp
 					temp2=None
 					validar=False
 					print("elemento eliminado")
@@ -66,44 +77,98 @@ class Lista(object):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__primero
+			return self.primero
 	def getUltimo(self):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__ultimo
+			return self.ultimo
 	def imprimirInicioFin(self):
 		if self.getVacio()==True:
 			print("lista vacia")
 		else:
 			validar=True
-			temp=self.__primero
+			temp=self.primero
 			while(validar):
 				print(temp.getElemento())
 				print(temp.getPalabra())
-				if temp==self.__ultimo:
+				if temp==self.ultimo:
 					validar=False
 				else:
 					temp=temp.psig
+	def buscar(self,palabra):
+		if self.getVacio()==True:
+			print("lista vacia")
+		else:
+			temp=self.primero
+			while temp.getPalabra()!=palabra:
+				temp=temp.psig
+			print "se encontro el elemento ->" + temp.getPalabra()
+
+	
+	def obtenerSize(self):
+		return self.tam
+
+	def eliminar2(self,index):
+		if index>=0 and index<self.tam:
+			if index==0:
+				self.primero=self.primero.psig
+			elif index==self.obtenerSize()-1:
+				actual=self.primero
+				while actual.psig!=self.ultimo:
+					actual=actual.psig
+				aux=actual.psig
+				actual.psig=None
+				self.ultimo=actual
+			else:
+				aux=self.primero
+				contador=0
+				while contador<index-1:
+					aux=aux.psig
+					contador+=1
+				siguiente=aux.psig
+				aux.psig=siguiente.psig
+				aux=None
+		self.tam-=1
+
+				
+
+
+
+
 	
 
-  
+   
+    			
+
+                        
 	
+
+x=Lista()
+x.setFinal(2,"hola")
+x.setFinal(3,"python")
+x.setFinal(7,"qer")
+x.setFinal(1,"queso")
+x.setFinal(90,"pan")
+x.setFinal(17,"adios")
+x.setFinal(11,"nike")
+x.setFinal(45,"ter")
+
+
+
+x.imprimirInicioFin()
+print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+#x.buscar("queso")
+x.eliminar2(4)
+x.imprimirInicioFin()  
+
+ 
+
+
 
 
     
-x=Lista()
-x.setInicio(2,"hola")
-x.setInicio(3,"python")
-x.setInicio(7,"qer")
-x.setInicio(1,"queso")
-x.setInicio(90,"pan")
 
-
-
-x.imprimirInicioFin()
-x.eliminarUltimo()
-x.imprimirInicioFin()
 
 #para cola eliminar primero
 #para pila el ultimo
