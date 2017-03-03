@@ -5,12 +5,22 @@
  */
 package menu;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+
 /**
  *
  * @author jossie
  */
 public class cola extends javax.swing.JFrame {
-
+public static OkHttpClient webClient = new OkHttpClient();
     /**
      * Creates new form cola
      */
@@ -35,6 +45,11 @@ public class cola extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("queue");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("dequeue");
 
@@ -67,6 +82,19 @@ public class cola extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String val = jTextField1.getText().toString();
+        RequestBody formBody2 = new FormEncodingBuilder()
+                .add("valor", val)
+                .build();
+        String q = getString("AddCola", formBody2); 
+        System.out.println(q + "---");
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,6 +129,22 @@ public class cola extends javax.swing.JFrame {
                 new cola().setVisible(true);
             }
         });
+    }
+    
+    public static String getString(String metodo, RequestBody formBody) {
+
+        try {
+            URL url = new URL("http://0.0.0.0:5000/" + metodo);
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            java.util.logging.Logger.getLogger(menu.cola.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(menu.cola.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

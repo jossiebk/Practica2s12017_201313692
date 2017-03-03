@@ -1,18 +1,20 @@
+import os
+import graphviz
 #nodo de mi pila
 class NodoCola(object):
 	def __init__(self,elemento):
-		self.__elemento=elemento
-		self.__psig=None
+		self.elemento=elemento
+		self.psig=None
 	def getElemento(self):
-		return self.__elemento
+		return self.elemento
 	
 #clase pila
 class Cola(object):
 	def __init__(self):
-		self.__primero=None
-		self.__ultimo=None
+		self.primero=None
+		self.ultimo=None
 	def getVacio(self):
-		if self.__primero==None:
+		if self.primero==None:
 			return True
 
 	
@@ -20,20 +22,20 @@ class Cola(object):
 	def queue(self,elemento):
 		nuevo=NodoCola(elemento)
 		if self.getVacio()==True:
-			self.__primero=self.__ultimo=nuevo
+			self.primero=self.ultimo=nuevo
 		else:
-			self.__ultimo.psig=nuevo
-			self.__ultimo=nuevo
+			self.ultimo.psig=nuevo
+			self.ultimo=nuevo
 	def dequeue(self):
 		if self.getVacio()==True:
 			print ("lista vacia, imposible eliminar")
-		elif self.__primero==self.__ultimo:
-			self.__primero=None
-			self.__ultimom=None
+		elif self.primero==self.ultimo:
+			self.primero=None
+			self.ultimo=None
 			print("elemento eliminado, lista vacia")
 		else: 
-			temp =self.__primero
-			self.__primero=self.__primero.psig
+			temp =self.primero
+			self.primero=self.primero.psig
 			temp=None
 			print("elemento eliminado")
 	
@@ -41,35 +43,49 @@ class Cola(object):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__primero
+			return self.primero
 	def getUltimo(self):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__ultimo
+			return self.ultimo
 	def mostrar(self):
 		if self.getVacio()==True:
 			print("lista vacia")
 		else:
 			validar=True
-			temp=self.__primero
+			temp=self.primero
 			while(validar):
 				print(temp.getElemento())
 				
-				if temp==self.__ultimo:
+				if temp==self.ultimo:
 					validar=False
 				else:
 					temp=temp.psig
+	def graficar(self):
+		auxiliar=self.primero
+		auxiliar2=self.primero.psig
+		file_path="Reporte"
+		try:
+			if not os.path.exists(file_path):
+				os.makedirs(file_path)
+				print("se hizo el path")
+			archivo=open("Reporte/cola.dot","w")
+			archivo.write("digraph Cola{\n")
+			archivo.write("\t node[shape=ellipse, color=green,style=filled];\n")
+			archivo.write("\t subgraph clusterCola {\n")
+			archivo.write("\t label= \"cola\";\n")
+			archivo.write("\t fontsize = 16;\n")
+			while auxiliar!=None and auxiliar2!=None:
+				archivo.write("\t" + str(auxiliar.getElemento())+"->"+str(auxiliar2.getElemento())+"\n")
+				auxiliar=auxiliar.psig
+				auxiliar2=auxiliar2.psig
+			archivo.write("\t } \n")
+			archivo.write("}")
+			archivo.close()
+			cmd='"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe" -Tjpg Reporte\\cola.dot -o Reporte\\cola.jpg'
+			os.system(cmd)
+		except ValueError:
+			print("Error")
 
 
-x=Cola()
-x.queue(2)
-x.queue(12)
-x.queue(90)
-x.queue(23)
-x.queue(77)
-
-x.mostrar()
-
-x.dequeue()
-x.mostrar()

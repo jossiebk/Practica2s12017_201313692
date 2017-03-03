@@ -1,61 +1,63 @@
+import graphviz as gvs
+import os
 #nodo de mi pila
 class NodoPila(object):
 	def __init__(self,elemento):
-		self.__elemento=elemento
-		self.__psig=None
+		self.elemento=elemento
+		self.psig=None
 	def getElemento(self):
-		return self.__elemento
+		return self.elemento
 	
 #clase pila
 class Pila(object):
 	def __init__(self):
-		self.__primero=None
-		self.__ultimo=None
+		self.primero=None
+		self.ultimo=None
 	def getVacio(self):
-		if self.__primero==None:
+		if self.primero==None:
 			return True
 
 	def setInicio(self,elemento):
 		nuevo = NodoPila(elemento)
 		if self.getVacio()==True:
-			self.__primero=self.__ultimo=nuevo
+			self.primero=self.ultimo=nuevo
 		else:
-			nuevo.psig=self.__primero
-			self.__primero=nuevo
+			nuevo.psig=self.primero
+			self.primero=nuevo
 
 	def setFinal(self,elemento):
 		nuevo=NodoPila(elemento)
 		if self.getVacio()==True:
-			self.__primero=self.__ultimo=nuevo
+			self.primero=self.ultimo=nuevo
 		else:
-			self.__ultimo.psig=nuevo
-			self.__ultimo=nuevo
+			self.ultimo.psig=nuevo
+			self.ultimo=nuevo
 	def eliminarPrimero(self):
 		if self.getVacio()==True:
 			print ("lista vacia, imposible eliminar")
-		elif self.__primero==self.__ultimo:
-			self.__primero=None
-			self.__ultimom=None
+		elif self.primero==self.ultimo:
+			self.primero=None
+			self.ultimo=None
 			print("elemento eliminado, lista vacia")
 		else: 
 			temp =self.__primero
-			self.__primero=self.__primero.psig
+			self.primero=self.primero.psig
 			temp=None
 			print("elemento eliminado")
 	def eliminarUltimo(self):
 		if self.getVacio()==True:
 			print("lista vacia")
-		elif self.__primero==self.__ultimo:
-			self.__primero=None
-			self.__ultimo=None
+		elif self.primero==self.ultimo:
+			self.primero=None
+			self.ultimo=None
 			print("elemento eliminado, lista vacia")
 		else:
 			validar=True
-			temp=self.__primero
+			temp=self.primero
 			while(validar):
-				if temp.psig==self.__ultimo:
-					temp2=self.__ultimo
-					self.__ultimo=temp
+				if temp.psig==self.ultimo:
+					temp2=self.ultimo
+					self.ultimo=temp
 					temp2=None
 					validar=False
 					print("elemento eliminado")
@@ -65,25 +67,50 @@ class Pila(object):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__primero
+			return self.primero
 	def getUltimo(self):
 		if self.getVacio()==true:
 			return ("lista vacia")
 		else:
-			return self.__ultimo
+			return self.ultimo
 	def imprimirInicioFin(self):
 		if self.getVacio()==True:
 			print("lista vacia")
 		else:
 			validar=True
-			temp=self.__primero
+			temp=self.primero
 			while(validar):
 				print(temp.getElemento())
 				
-				if temp==self.__ultimo:
+				if temp==self.ultimo:
 					validar=False
 				else:
 					temp=temp.psig
+	def graficar(self):
+		auxiliar=self.primero
+		auxiliar2=self.primero.psig
+		file_path="Graficas"
+		try:
+			if not os.path.exists(file_path):
+				os.makedirs(file_path)
+				print("se hizo el path")
+			archivo=open("Reporte/pila.dot","w")
+			archivo.write("digraph Pila{\n")
+			archivo.write("\t node[shape=record];\n")
+			archivo.write("\t subgraph clusterPila {\n")
+			archivo.write("\t label= \"pila\";\n")
+			archivo.write("\t fontsize = 16;\n")
+			while auxiliar!=None and auxiliar2!=None:
+				archivo.write("\t" + str(auxiliar.getElemento())+"->"+str(auxiliar2.getElemento())+"\n")
+				auxiliar=auxiliar.psig
+				auxiliar2=auxiliar2.psig
+			archivo.write("\t } \n")
+			archivo.write("}")
+			archivo.close()
+			cmd='"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe" -Tjpg Reporte\\pila.dot -o Reporte\\pila.jpg'
+			os.system(cmd)
+		except ValueError:
+			print("Error")
 
 
 x=Pila()
@@ -92,7 +119,7 @@ x.setFinal(12)
 x.setFinal(90)
 x.setFinal(23)
 x.setFinal(77)
-
+x.graficar()
 x.imprimirInicioFin()
 
 x.eliminarUltimo()

@@ -1,3 +1,7 @@
+import graphviz as gvl
+import os
+
+
 class NodoLista(object):
 	def __init__(self,elemento,palabra):
 		self.elemento=elemento
@@ -7,13 +11,6 @@ class NodoLista(object):
 		return self.elemento
 	def getPalabra(self):
 		return self.palabra
-
-
-
-
-
-
-
 
 
 class Lista(object):
@@ -42,37 +39,7 @@ class Lista(object):
 			self.ultimo.psig=nuevo
 			self.ultimo=nuevo
 			self.tam +=1
-	def eliminarPrimero(self):
-		if self.getVacio()==True:
-			print ("lista vacia, imposible eliminar")
-		elif self.primero==self.ultimo:
-			self.primero=None
-			self.ultimom=None
-			print("elemento eliminado, lista vacia")
-		else: 
-			temp =self.primero
-			self.primero=self.primero.psig
-			temp=None
-			print("elemento eliminado")
-	def eliminarUltimo(self):
-		if self.getVacio()==True:
-			print("lista vacia")
-		elif self.primero==self.ultimo:
-			self.primero=None
-			self.ultimo=None
-			print("elemento eliminado, lista vacia")
-		else:
-			validar=True
-			temp=self.primero
-			while(validar):
-				if temp.psig==self.ultimo:
-					temp2=self.ultimo
-					self.ultimo=temp
-					temp2=None
-					validar=False
-					print("elemento eliminado")
-				else:
-					temp=temp.psig
+	
 	def getPrimero(self):
 		if self.getVacio()==true:
 			return ("lista vacia")
@@ -109,7 +76,7 @@ class Lista(object):
 	def obtenerSize(self):
 		return self.tam
 
-	def eliminar2(self,index):
+	def eliminar(self,index):
 		if index>=0 and index<self.tam:
 			if index==0:
 				self.primero=self.primero.psig
@@ -131,18 +98,34 @@ class Lista(object):
 				aux=None
 		self.tam-=1
 
-				
-
-
-
-
+	def graficar(self):
+		auxiliar=self.primero
+		auxiliar2=self.primero.psig
+		file_path="Reporte"
+		try:
+			if not os.path.exists(file_path):
+				os.makedirs(file_path)
+				print("se hizo el path")
+			archivo=open("Reporte/lista.dot","w")
+			archivo.write("digraph Lista{\n")
+			archivo.write("\t node[shape=record];\n")
+			archivo.write("\t subgraph clusterList {\n")
+			archivo.write("\t label= \"lista\";\n")
+			archivo.write("\t fontsize = 16;\n")
+			while auxiliar!=None and auxiliar2!=None:
+				archivo.write("\t" + str(auxiliar.getElemento())+"->"+str(auxiliar2.getElemento())+"\n")
+				auxiliar=auxiliar.psig
+				auxiliar2=auxiliar2.psig
+			archivo.write("\t } \n")
+			archivo.write("}")
+			archivo.close()
+			cmd='"C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe" -Tjpg Reporte\\lista.dot -o Reporte\\lista.jpg'
+			os.system(cmd)
+		except ValueError:
+			print("Error")
 	
-
-   
-    			
-
-                        
-	
+           
+        
 
 x=Lista()
 x.setFinal(2,"hola")
@@ -155,12 +138,8 @@ x.setFinal(11,"nike")
 x.setFinal(45,"ter")
 
 
+x.graficar()
 
-x.imprimirInicioFin()
-print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
-#x.buscar("queso")
-x.eliminar2(4)
-x.imprimirInicioFin()  
 
  
 
