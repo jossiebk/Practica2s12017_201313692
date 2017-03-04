@@ -3,6 +3,7 @@ digraph Cola{
 	 subgraph clusterCola {
 	 label= "cola";
 	 fontsize = 16;
-	12->99
+	99->65
+	65->1
 	 } 
 }

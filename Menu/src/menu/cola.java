@@ -52,6 +52,11 @@ public static OkHttpClient webClient = new OkHttpClient();
         });
 
         jButton2.setText("dequeue");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,16 +90,26 @@ public static OkHttpClient webClient = new OkHttpClient();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String val = jTextField1.getText().toString();
-        RequestBody formBody2 = new FormEncodingBuilder()
+        RequestBody formBody = new FormEncodingBuilder()
                 .add("valor", val)
                 .build();
-        String q = getString("AddCola", formBody2); 
-        System.out.println(q + "---");
+        String q = getString("AddCola", formBody); 
+        System.out.println(q + "#");
         
         
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String val = jTextField1.getText().toString();
+        RequestBody formBody2 = new FormEncodingBuilder()
+                .add("valor", val)
+                .build();
+        String w = getString2("PopCola", formBody2); 
+        System.out.println(w + "#");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,6 +162,22 @@ public static OkHttpClient webClient = new OkHttpClient();
         return null;
     }
 
+    
+    public static String getString2(String metodo, RequestBody formBody) {
+
+        try {
+            URL url = new URL("http://0.0.0.0:5000/" + metodo);
+            Request request = new Request.Builder().url(url).post(formBody).build();
+            Response response = webClient.newCall(request).execute();//Aqui obtiene la respuesta en dado caso si hayas pues un return en python
+            String response_string = response.body().string();//y este seria el string de las respuesta
+            return response_string;
+        } catch (MalformedURLException ex) {
+            java.util.logging.Logger.getLogger(menu.cola.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(menu.cola.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

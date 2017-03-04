@@ -3,12 +3,7 @@ digraph Lista{
 	 subgraph clusterList {
 	 label= "lista";
 	 fontsize = 16;
-	2->3
-	3->7
-	7->1
-	1->90
-	90->17
-	17->11
-	11->45
+	hola2->hola1
+	hola1->hola3
 	 } 
 }

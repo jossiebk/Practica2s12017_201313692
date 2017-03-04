@@ -40,7 +40,7 @@ class Pila(object):
 			self.ultimo=None
 			print("elemento eliminado, lista vacia")
 		else: 
-			temp =self.__primero
+			temp =self.primero
 			self.primero=self.primero.psig
 			temp=None
 			print("elemento eliminado")
@@ -89,7 +89,7 @@ class Pila(object):
 	def graficar(self):
 		auxiliar=self.primero
 		auxiliar2=self.primero.psig
-		file_path="Graficas"
+		file_path="Reporte"
 		try:
 			if not os.path.exists(file_path):
 				os.makedirs(file_path)
@@ -113,14 +113,3 @@ class Pila(object):
 			print("Error")
 
 
-x=Pila()
-x.setFinal(2)
-x.setFinal(12)
-x.setFinal(90)
-x.setFinal(23)
-x.setFinal(77)
-x.graficar()
-x.imprimirInicioFin()
-
-x.eliminarUltimo()
-x.imprimirInicioFin()

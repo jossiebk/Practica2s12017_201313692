@@ -3,14 +3,13 @@ import os
 
 
 class NodoLista(object):
-	def __init__(self,elemento,palabra):
+	def __init__(self,elemento):
 		self.elemento=elemento
-		self.palabra=palabra
+		#self.palabra=palabra
 		self.psig=None
 	def getElemento(self):
 		return self.elemento
-	def getPalabra(self):
-		return self.palabra
+	
 
 
 class Lista(object):
@@ -22,8 +21,8 @@ class Lista(object):
 		if self.primero==None:
 			return True
 
-	def setInicio(self,elemento,palabra):
-		nuevo = NodoLista(elemento,palabra)
+	def setInicio(self,elemento):
+		nuevo = NodoLista(elemento)
 		if self.getVacio()==True:
 			self.primero=self.ultimo=nuevo
 		else:
@@ -31,8 +30,8 @@ class Lista(object):
 			self.primero=nuevo
 			self.tam +=1
 
-	def setFinal(self,elemento,palabra):
-		nuevo=NodoLista(elemento,palabra)
+	def setFinal(self,elemento):
+		nuevo=NodoLista(elemento)
 		if self.getVacio()==True:
 			self.primero=self.ultimo=nuevo
 		else:
@@ -58,19 +57,20 @@ class Lista(object):
 			temp=self.primero
 			while(validar):
 				print(temp.getElemento())
-				print(temp.getPalabra())
+				#print(temp.getPalabra())
 				if temp==self.ultimo:
 					validar=False
 				else:
 					temp=temp.psig
-	def buscar(self,palabra):
+	def buscar(self,elemento):
 		if self.getVacio()==True:
 			print("lista vacia")
 		else:
 			temp=self.primero
-			while temp.getPalabra()!=palabra:
+			while temp.getElemento()!=elemento:
 				temp=temp.psig
-			print "se encontro el elemento ->" + temp.getPalabra()
+			return temp.getElemento()
+			print "se encontro el elemento ->"+temp.getElemento()
 
 	
 	def obtenerSize(self):
@@ -126,20 +126,11 @@ class Lista(object):
 	
            
         
-
-x=Lista()
-x.setFinal(2,"hola")
-x.setFinal(3,"python")
-x.setFinal(7,"qer")
-x.setFinal(1,"queso")
-x.setFinal(90,"pan")
-x.setFinal(17,"adios")
-x.setFinal(11,"nike")
-x.setFinal(45,"ter")
-
-
-x.graficar()
-
+b=Lista()
+b.setInicio("hola3")
+b.setInicio("hola1")
+b.setInicio("hola2")
+b.graficar()
 
  
 
