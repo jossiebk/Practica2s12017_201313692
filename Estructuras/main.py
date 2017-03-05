@@ -57,20 +57,19 @@ def EliminarPila():
 @app.route('/AddLista',methods=['POST'])
 def AgregarLista():
 	T=str(request.form['valor'])
-	Y=str(request)
-	z.setInicio()
+	z.setInicio(T)
 	z.graficar()
-	return "elimino "
+	return "se agrego " + T
 @app.route('/searchLista',methods=['POST'])
 def BuscarLista():
 	T=str(request.form['valor'])
-	y.buscar(T)
-	y.graficar()
-	return "se encontro ->"+y.buscar(T)
+	z.buscar(T)
+	z.graficar()
+	return "se encontro ->"+z.buscar(T)
 @app.route('/popLista',methods=['POST'])
 def EliminarLista():
 	R=str(request.form['valor'])
-	y.eliminar(R)
+	z.eliminar(R)
 	z.graficar()
 	return "salio ->"
 

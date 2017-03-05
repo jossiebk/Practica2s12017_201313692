@@ -53,8 +53,18 @@ public class lista extends javax.swing.JFrame {
         });
 
         jButton2.setText("Borrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,10 +115,30 @@ public class lista extends javax.swing.JFrame {
         RequestBody formBody2 = new FormEncodingBuilder()
                 .add("valor", val)
                 .build();
-        String w = getString1("PopPila", formBody2); 
+        String w = getString1("AddLista", formBody2); 
         System.out.println(w + "#");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String val = jTextField2.getText().toString();
+        RequestBody formBody2 = new FormEncodingBuilder()
+                .add("valor", val)
+                .build();
+        String w = getString2("popLista", formBody2); 
+        System.out.println(w + "#");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         String val = jTextField3.getText().toString();
+        RequestBody formBody2 = new FormEncodingBuilder()
+                .add("valor", val)
+                .build();
+        String w = getString3("searchLista", formBody2); 
+        System.out.println(w + "#");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -67,10 +67,13 @@ class Lista(object):
 			print("lista vacia")
 		else:
 			temp=self.primero
+			print "entro al else"
 			while temp.getElemento()!=elemento:
+				print "entro al while"
 				temp=temp.psig
-			return temp.getElemento()
 			print "se encontro el elemento ->"+temp.getElemento()
+			return temp.getElemento()
+			
 
 	
 	def obtenerSize(self):
@@ -126,11 +129,7 @@ class Lista(object):
 	
            
         
-b=Lista()
-b.setInicio("hola3")
-b.setInicio("hola1")
-b.setInicio("hola2")
-b.graficar()
+
 
  
 
